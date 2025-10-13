@@ -4,9 +4,12 @@ import logging
 import discord
 from discord import app_commands
 from discord.ext import commands
+from dotenv import load_dotenv
 
 # Configuración de logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 intents = discord.Intents.default()
@@ -25,6 +28,7 @@ async def on_ready():
         logger.info(f"Se sincronizaron {len(synced)} comandos")
     except Exception as e:
         logger.error(f"Fallo al sincronizar los comandos: {e}")
+
 
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
@@ -46,6 +50,7 @@ async def replace_twitter(interaction: discord.Interaction, url: str):
         )
         logger.warning(f"Intento de reemplazo fallido para URL no válida: {url}")
 
+
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
 @bot.tree.command(
@@ -55,7 +60,7 @@ async def replace_twitter(interaction: discord.Interaction, url: str):
 @app_commands.describe(url="La URL de Instagram que se va a reemplazar")
 async def replace_instagram(interaction: discord.Interaction, url: str):
     if "instagram.com" in url:
-        new_url = url.replace("instagram.com", "ddinstagram.com")
+        new_url = url.replace("instagram.com", "kkinstagram.com")
         await interaction.response.send_message(new_url)
         logger.info(f"URL de Instagram reemplazada: {url} -> {new_url}")
     else:
@@ -63,6 +68,7 @@ async def replace_instagram(interaction: discord.Interaction, url: str):
             "URL tan invalida como vos.", ephemeral=True
         )
         logger.warning(f"Intento de reemplazo fallido para URL no válida: {url}")
+
 
 @app_commands.allowed_installs(guilds=True, users=False)
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
@@ -82,6 +88,7 @@ async def replace_reddit(interaction: discord.Interaction, url: str):
         )
         logger.warning(f"Intento de reemplazo fallido para URL no válida: {url}")
 
+
 @bot.event
 async def on_message(message: discord.Message):
     # Verifica si el mensaje menciona al bot
@@ -92,6 +99,7 @@ async def on_message(message: discord.Message):
 
 
 # Cargar el token y ejecutar el bot
+load_dotenv()
 token = os.getenv("DISCORD_BOT_TOKEN")
 if not token:
     logger.error("No se encontró el token del bot en las variables de entorno.")
