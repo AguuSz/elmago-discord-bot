@@ -34,13 +34,13 @@ async def on_ready():
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
 @bot.tree.command(
     name="vx",
-    description="Reemplaza la URL de Twitter/X con la URL de VXTwitter para mejor visualización.",
+    description="Reemplaza la URL de Twitter/X con la URL de x.revol.club para mejor visualización.",
 )
 @app_commands.describe(url="La URL de Twitter/X que se va a reemplazar")
 async def replace_twitter(interaction: discord.Interaction, url: str):
     if "twitter.com" in url or "x.com" in url:
-        new_url = url.replace("twitter.com", "vxtwitter.com").replace(
-            "x.com", "vxtwitter.com"
+        new_url = url.replace("twitter.com", "x.revol.club").replace(
+            "x.com", "x.revol.club"
         )
         await interaction.response.send_message(new_url)
         logger.info(f"URL de Twitter/X reemplazada: {url} -> {new_url}")
