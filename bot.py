@@ -181,17 +181,17 @@ async def on_ready():
 @app_commands.allowed_contexts(guilds=True, dms=False, private_channels=False)
 @bot.tree.command(
     name="vx",
-    description="Descarga y envía el video de Twitter/X con información del autor.",
+    description="Reemplaza la URL de Twitter/X con la URL de x.revol.club para mejor visualización.",
 )
 @app_commands.describe(url="La URL de Twitter/X del video a descargar")
 async def replace_twitter(interaction: discord.Interaction, url: str):
-    logger.info(f"=== Comando /vx ejecutado por {interaction.user.name} ===")
-    logger.info(f"URL proporcionada: {url}")
-
-    # Validar URL
-    if not ("twitter.com" in url or "x.com" in url):
-        error_msg = f"URL inválida (no contiene twitter.com o x.com): {url}"
-        logger.warning(error_msg)
+    if "twitter.com" in url or "x.com" in url:
+        new_url = url.replace("twitter.com", "x.revol.club").replace(
+            "x.com", "x.revol.club"
+        )
+        await interaction.response.send_message(new_url)
+        logger.info(f"URL de Twitter/X reemplazada: {url} -> {new_url}")
+    else:
         await interaction.response.send_message(
             "URL tan invalida como vos.", ephemeral=True
         )
